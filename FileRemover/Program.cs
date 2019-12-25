@@ -18,7 +18,7 @@ namespace FileRemover
             PrintVersion();
 
             //Options.GenerateTestData();
-            // Options.GenerateSampleJsonFile();
+            Options.GenerateSampleJsonFile();
 
             var options = Options.LoadFromJsonFile(Info);
             if (options == null || options.Rules == null || !options.Rules.Any()) Warn("配置文件不包含任何有效规则");

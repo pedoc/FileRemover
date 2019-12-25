@@ -27,12 +27,16 @@ namespace FileRemover
 
         private const string TestDir = "testDir";
         private const string TestSuffix = ".txt";
+
+        /// <summary>
+        /// 当配置文件不存在时，自动生成一个示例配置
+        /// </summary>
         public static void GenerateSampleJsonFile()
         {
             if (!File.Exists(JsonFile))
                 File.WriteAllText(JsonFile, JsonConvert.SerializeObject(new Options()
                 {
-                    WaitExit = true,
+                    WaitExit = false,
                     Rules = new List<Rule>()
                     {
                         new Rule()
@@ -43,11 +47,11 @@ namespace FileRemover
                             Filter = @$"(.*)(\{TestSuffix})$",
                             IsEnable = true,
                             MatchMode = MatchMode.Regex,
-                            SecondsAgo = 60,
+                            SecondsAgo = (uint)TimeSpan.FromDays(90).TotalSeconds,
                             DeleteDirectoryIfEmpty = true
                         }
                     }
-                }));
+                },new JsonSerializerSettings(){Formatting = Formatting.Indented}));
         }
 
         public static void GenerateTestData()
